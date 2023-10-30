@@ -2,6 +2,7 @@ from flask_cors import CORS
 from flask import Flask, jsonify
 from joblib import load
 import mysql.connector
+import os
 
 app = Flask(__name__)
 
@@ -10,10 +11,10 @@ model = load('lg_model.joblib')
 
 # Set up MySQL connection parameters
 db_config = {
-    "host": "frwahxxknm9kwy6c.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-    "user": "j6qbx3bgjysst4jr",
-    "password": "mcbsdk2s27ldf37t",
-    "database": "nkw2tiuvgv6ufu1z"
+    "host": os.getenv("DB_HOST"),
+    "user": os.getenv("DB_USER"),
+    "password": os.getenv("DB_PASSWORD"),
+    "database": os.getenv("DB_NAME")
 }
 
 @app.route('/predict/phone/<phone_number>', methods=['GET'])
